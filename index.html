@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Duty Follow-up Book</title>
+<style>
+:root{--bg:#f2f4f7;--sf:#fff;--tx:#16202b;--mu:#62707f;--ln:#e1e6ec;--tn:#eef3fa;--pr:#1457b8;--onpr:#fff;--gr:#13824a;--bl:#0b7a99;--am:#b86e00;--rd:#c62828;--grb:#e7f6ee;--blb:#e3f3f8;--amb:#fff4dc;--rdb:#fde9e9;--pu:#6a3fb5;--pub:#f0e9fb}
+@media(prefers-color-scheme:dark){:root{--bg:#10151a;--sf:#1a2027;--tx:#e8edf2;--mu:#98a4b1;--ln:#2a323b;--tn:#202a36;--pr:#5b9dff;--onpr:#0b1420;--gr:#4cc38a;--bl:#4cb8d6;--am:#f0b04a;--rd:#ff7b7b;--grb:#10301f;--blb:#0e2a33;--amb:#33290f;--rdb:#381819;--pu:#b99aff;--pub:#2a2040}}
+*{box-sizing:border-box}html{height:100%}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 -apple-system,"Segoe UI",Roboto,Arial,sans-serif;padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0)}
+button,input,select{font:inherit;color:inherit}
+header{background:var(--sf);border-bottom:1px solid var(--ln);padding:12px 14px;display:grid;gap:10px;max-width:1200px;margin:auto}
+.r{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.org{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mu)}
+h1{margin:0;font-size:17px}#clock{font-weight:700;color:var(--pr);background:var(--tn);padding:6px 10px;border-radius:8px;font-variant-numeric:tabular-nums}
+input,select{height:44px;border:1px solid var(--ln);border-radius:8px;background:var(--bg);padding:0 10px;font-size:16px;width:100%}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn{min-height:42px;padding:0 12px;border-radius:8px;border:1px solid var(--ln);background:var(--sf);font-weight:600;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;color:var(--tx)}
+.btn.pr{background:var(--pr);border-color:var(--pr);color:var(--onpr)}.btn.call{background:var(--gr);border-color:var(--gr);color:#fff}
+.btn.ok{background:var(--grb);border-color:var(--gr);color:var(--gr)}
+main{max-width:1200px;margin:auto;padding:0 14px 30px}
+.tabs{display:flex;gap:8px;margin:12px 0}.tabs .btn{flex:1}.tabs .on{background:var(--pr);border-color:var(--pr);color:var(--onpr)}
+#st{font-size:12.5px;color:var(--mu);margin-bottom:8px}
+.grid{display:grid;gap:10px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(min-width:1000px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.c{background:var(--sf);border:1px solid var(--ln);border-left:4px solid var(--ln);border-radius:12px;padding:12px 14px;min-width:0}
+.c.op{border-left-color:var(--gr)}.c.sup{border-left-color:var(--bl)}.c.cal{border-left-color:var(--pu)}.c.abs{border-left-color:var(--rd)}.c.wait{border-left-color:var(--am)}
+.c .t{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.c .t b{font-size:19px;overflow-wrap:anywhere}
+.l{margin-top:4px;font-size:13.5px;overflow-wrap:anywhere}.l span,.mu{color:var(--mu)}
+.bd{font-size:11.5px;font-weight:700;padding:5px 9px;border-radius:99px;background:var(--tn);color:var(--mu);white-space:nowrap}
+.bd.op{background:var(--grb);color:var(--gr)}.bd.sup{background:var(--blb);color:var(--bl)}.bd.cal{background:var(--pub);color:var(--pu)}.bd.abs{background:var(--rdb);color:var(--rd)}.bd.wait{background:var(--amb);color:var(--am)}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.acts .btn{min-height:38px;font-size:13px}
+.chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:6px}
+@media(min-width:700px){.chips{grid-template-columns:repeat(6,1fr)}}
+.chip{background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:8px 10px}.chip b{display:block;font-size:22px}.chip span{font-size:12px;color:var(--mu);font-weight:600}
+.sec{margin:18px 0 8px}.sec h2{margin:0;font-size:15px}.sec small{color:var(--mu)}
+.none{padding:12px;border:1px dashed var(--ln);border-radius:12px;color:var(--mu);text-align:center;font-size:13.5px}
+dialog{border:1px solid var(--ln);border-radius:12px;background:var(--sf);color:var(--tx);width:min(92vw,420px)}
+dialog label{display:block;font-size:12px;font-weight:600;color:var(--mu);margin:10px 0 4px}
+</style></head>
+<body>
+<header>
+ <div class="r"><div><div class="org">Chakra E-Trans</div><h1>Duty Follow-up Book</h1></div><span id="clock">--:--</span></div>
+ <div class="g2"><input id="date" type="date" aria-label="Duty date"><button class="btn pr" id="ref" type="button">Refresh</button></div>
+ <input id="q" type="search" placeholder="Search service, route, emp ID, name, phone" autocomplete="off">
+</header>
+<main>
+ <div class="tabs"><button class="btn on" id="tD" type="button">Duties</button><button class="btn" id="tS" type="button">Follow-up Summary</button></div>
+ <div id="st" role="status"></div>
+ <div id="duties" class="grid"></div>
+ <div id="sum" style="display:none"></div>
+</main>
+<dialog id="dlg">
+ <h3 id="dT" style="margin:0 0 4px">Who operated this service?</h3><div id="dS" class="mu" style="font-size:13px"></div>
+ <label for="eId">Driver Emp ID</label><input id="eId" list="dl" autocomplete="off" placeholder="Emp ID (assigned, other or spare driver)">
+ <datalist id="dl"></datalist>
+ <div id="dH" class="mu" style="font-size:12.5px;min-height:18px;margin-top:6px"></div>
+ <label for="eN">Name (only if not in chart / driver list)</label><input id="eN" autocomplete="off">
+ <label for="eT">Came at</label><input id="eT" type="time">
+ <div class="g2" style="margin-top:14px"><button class="btn" id="dX" type="button">Cancel</button><button class="btn pr" id="dOk" type="button">Save</button></div>
+</dialog>
+<script>
+const API='https://script.google.com/macros/s/AKfycbzNjcVzAuFApHEWhoiAyw3YaP69Gh0SOX7yzJ_ANDEkwKEdbTn6JNVPL9_9bCkEK7bSaA/exec';
+const $=id=>document.getElementById(id);
+const ICON='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>';
+let date=iso(new Date()),duty=[],roster=[],fu=[],view='D',grace=30,called=new Set(),slot=null,fuOk=true;
+try{called=new Set(JSON.parse(localStorage.getItem('fb_called')||'[]'))}catch(e){}
+function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function pt(v){const m=String(v||'').match(/(\d{1,2}):(\d{2})/);if(!m)return null;let h=+m[1];if(/pm/i.test(v)&&h<12)h+=12;if(/am/i.test(v)&&h===12)h=0;return h*60+ +m[2]}
+function td(v){const m=pt(v);return m==null?'—':String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}
+function nowHM(){const d=new Date();return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')}
+function hm(m){return m>=60?Math.floor(m/60)+'h '+m%60+'m':m+'m'}
+async function get(a,d){const r=await fetch(API+'?action='+a+(d?'&date='+encodeURIComponent(d):''));const j=await r.json();if(!j||j.ok===false)throw new Error((j&&j.message)||'Request failed');return j}
+async function post(a,args){const r=await fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:a,args})});const j=await r.json();if(!j||j.ok===false)throw new Error((j&&j.message)||'Request failed');return j}
+
+/* people lookup: duty chart first, then driver list */
+function who(id){id=String(id||'').trim();if(!id)return null;const d=duty.find(r=>r.empId===id);if(d)return{id,name:d.empName,phone:d.phone};
+ const x=roster.find(r=>String(r.id).toUpperCase()===id.toUpperCase());return x?{id:x.id,name:x.name,phone:x.mobile}:null}
+const byEmp=id=>fu.find(a=>a.empId===id), bySlot=s=>fu.find(a=>a.slotId===s);
+function over(r){const rt=pt(r.repTime);if(rt==null)return null;const t=iso(new Date());if(date>t)return null;if(date<t)return 9999;const d=new Date();return d.getHours()*60+d.getMinutes()-rt}
+
+/* the four situations */
+function analyse(){
+ const o={op:[],sup:[],cal:[],abs:[],wait:[],need:[],free:[],st:{}};
+ duty.forEach(r=>{
+  const a=bySlot(r.slotId),mine=r.empId?byEmp(r.empId):null,ov=over(r),noshow=r.status==='noshow';
+  if(a){
+   if(a.empId===r.empId){o.op.push({r,a});o.st[r.slotId]='op'}
+   else{const was=duty.find(d=>d.empId===a.empId);(was?o.sup:o.cal).push({r,a,was,mine});o.st[r.slotId]=was?'sup':'cal'}
+   return}
+  if(r.empId&&!mine&&(noshow||(ov!=null&&ov>=grace))){o.abs.push({r,ov:noshow?null:ov});o.st[r.slotId]='abs';o.need.push({r,why:'Assigned driver absent'})}
+  else if(r.empId&&!mine&&ov!=null&&ov>=0){o.wait.push({r,ov});o.st[r.slotId]='wait'}
+  else if(mine){o.need.push({r,why:'Assigned driver went to '+(mine.servNo||'another service')});o.st[r.slotId]='sup'}
+  else if(!r.empId&&ov!=null&&ov>=0)o.need.push({r,why:'No driver assigned'});
+ });
+ const used=new Set(duty.map(r=>r.empId).concat(fu.map(a=>a.empId)));
+ o.free=roster.filter(x=>String(x.status).toUpperCase()==='ACTIVE'&&!used.has(String(x.id).trim()));
+ return o}
+
+function call(p){return p?`<a class="btn call" href="tel:${esc(p)}">${ICON}Call</a>`:''}
+function card(cls,title,badge,lines,acts){return`<article class="c ${cls}"><div class="t"><b>${title}</b><span class="bd ${cls}">${badge}</span></div>${lines.map(l=>`<div class="l">${l}</div>`).join('')}<div class="acts">${acts}</div></article>`}
+const sbtn=(s,l)=>`<button class="btn" data-a="sw" data-s="${esc(s)}">${l}</button>`;
+const BADGE={op:'Operated',sup:'Supporting',cal:'Called by supervisor',abs:'Absent',wait:'Waiting'};
+
+function renderDuties(){
+ const f=$('q').value.toLowerCase().trim(),o=analyse();let h='',n=0;
+ duty.forEach(r=>{
+  if(f&&![r.servNo,r.route,r.empId,r.empName,r.phone].some(v=>String(v).toLowerCase().includes(f)))return;n++;
+  const k=o.st[r.slotId]||'',a=bySlot(r.slotId),ck=date+'|'+r.slotId,isC=called.has(ck);
+  const who2=a&&a.empId!==r.empId?`<span>Now:</span> <b>${esc(a.empName||a.empId)}</b> <span>(ID ${esc(a.empId)}) · came ${esc(a.cameAt)}</span>`:'';
+  h+=card(k,esc(r.servNo)||'—',k?BADGE[k]:esc(r.status||'planned'),[
+   `${esc(r.empName)||'<span>Not assigned</span>'} <span>· ID ${esc(r.empId)||'—'}</span>`,
+   `<span>${esc(r.route)||''}${r.shift?' · '+esc(r.shift):''}</span>`,
+   `<span>Rep ${td(r.repTime)} · Dep ${td(r.depTime)} · Arr ${td(r.arrTime)}</span>`,who2].filter(Boolean),
+   call(r.phone)+`<button class="btn ${isC?'ok':''}" data-a="cl" data-k="${esc(ck)}">${isC?'✓ Called':'Mark Called'}</button>`+
+   `<button class="btn ${a&&a.empId===r.empId?'ok':''}" data-a="came" data-s="${esc(r.slotId)}">${a&&a.empId===r.empId?'✓ Came '+esc(a.cameAt):'Driver Came'}</button>`+sbtn(r.slotId,'Other driver'))});
+ $('duties').innerHTML=h;
+ if(!n)$('duties').innerHTML=`<div class="none" style="grid-column:1/-1">${duty.length?'No matching rows.':'No duty chart saved for '+date+'.'}</div>`}
+
+function sec(t,hint,items){return`<div class="sec"><h2>${t} (${items.length})</h2><small>${hint}</small></div>`+(items.length?`<div class="grid">${items.join('')}</div>`:'<div class="none">None</div>')}
+function renderSummary(){
+ const o=analyse(),chip=(n,l)=>`<div class="chip"><b>${n}</b><span>${l}</span></div>`;
+ let h=`<div class="r" style="margin-bottom:10px"><label for="gr" class="mu">Mark absent after</label><select id="gr" style="width:auto">${[0,15,30,45,60,90].map(m=>`<option value="${m}" ${m===grace?'selected':''}>${m?m+' min after Rep Time':'Rep Time passes'}</option>`).join('')}</select></div>
+ <div class="chips">${chip(o.op.length,'Operated')}${chip(o.sup.length,'Supporting')}${chip(o.cal.length,'Called by supervisor')}${chip(o.abs.length,'Absent')}${chip(o.wait.length,'Not yet came')}${chip(o.free.length,'Free drivers')}</div>`;
+ h+=sec('1. Assigned driver operated','Assigned duty, assigned driver went',o.op.map(x=>card('op',esc(x.r.servNo),'Operated',[`${esc(x.a.empName||x.a.empId)} <span>· ID ${esc(x.a.empId)} · came ${esc(x.a.cameAt)} · Rep ${td(x.r.repTime)}</span>`],call(x.a.phone))));
+ h+=sec('2. Supporting driver','Had another duty but went to a different service on supervisor’s word',o.sup.filter(x=>x.a).map(x=>card('sup',esc(x.r.servNo),'Supporting',[
+  `<span>Now:</span> <b>${esc(x.a.empName||x.a.empId)}</b> <span>(ID ${esc(x.a.empId)}) · came ${esc(x.a.cameAt)} · was assigned ${esc(x.was.servNo)}</span>`,
+  `<span>Chart:</span> ${esc(x.r.empName)||'nobody'} <span>${x.r.empId?'(ID '+esc(x.r.empId)+')':''}</span>${x.r.empId?(x.mine?' → moved to <b>'+esc(x.mine.servNo||'another service')+'</b>':' → <b style="color:var(--rd)">absent</b>'):''}`],
+  call(x.a.phone)+(x.r.phone&&x.r.empId!==x.a.empId?call(x.r.phone):'')+sbtn(x.r.slotId,'Change'))));
+ h+=sec('3. Assigned but not came','Assigned driver did not attend any duty',o.abs.map(x=>card('abs',esc(x.r.servNo),'Absent',[`${esc(x.r.empName)||'—'} <span>· ID ${esc(x.r.empId)}</span>`,`<span>Rep ${td(x.r.repTime)}${x.ov!=null&&x.ov<9999?' · '+hm(x.ov)+' over':''} · ${esc(x.r.route)}</span>`],call(x.r.phone)+sbtn(x.r.slotId,'Assign driver'))));
+ h+=sec('4. Called by supervisor','No duty on chart, came on call and completed a service',o.cal.map(x=>card('cal',esc(x.r.servNo),'Called',[`<b>${esc(x.a.empName||x.a.empId)}</b> <span>(ID ${esc(x.a.empId)}) · came ${esc(x.a.cameAt)}</span>`,`<span>Replaced: ${esc(x.r.empName)||'nobody assigned'}${x.r.empId?' (ID '+esc(x.r.empId)+')':''}</span>`],call(x.a.phone)+sbtn(x.r.slotId,'Change'))));
+ h+=sec('Not yet came','Rep Time passed, still inside wait time',o.wait.map(x=>card('wait',esc(x.r.servNo),'Waiting '+hm(x.ov),[`${esc(x.r.empName)} <span>· ID ${esc(x.r.empId)}</span>`,`<span>Rep ${td(x.r.repTime)}</span>`],call(x.r.phone)+`<button class="btn" data-a="came" data-s="${esc(x.r.slotId)}">Driver Came</button>`)));
+ h+=sec('Services needing a driver','Nobody on the service yet',o.need.map(x=>card('abs',esc(x.r.servNo),'Need driver',[`<span>${esc(x.why)}</span>`,`<span>Rep ${td(x.r.repTime)} · ${esc(x.r.route)}</span>`],sbtn(x.r.slotId,'Assign driver'))));
+ h+=sec('Free drivers to call','Active, not on the chart, no service yet',o.free.map(x=>card('',esc(x.name),'Free',[`<span>ID ${esc(x.id)}</span>`],call(x.mobile))));
+ $('sum').innerHTML=h;const g=$('gr');if(g)g.onchange=()=>{grace=+g.value;paint()}}
+
+function paint(){$('clock').textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+ if(view==='S'){if(!$('dlg').open)renderSummary()}else renderDuties()}
+
+/* arrivals */
+async function setCame(slotId,p,at){
+ const r=duty.find(x=>x.slotId===slotId);if(!r)return;
+ const rec={slotId,servNo:r.servNo,empId:p.id,empName:p.name||'',phone:p.phone||'',cameAt:at||nowHM()};
+ fu=fu.filter(a=>a.slotId!==slotId&&a.empId!==rec.empId);fu.push(rec);paint();
+ try{await post('saveFollowup',[date,rec]);$('st').textContent='Saved: '+(rec.empName||rec.empId)+' on '+rec.servNo+' at '+rec.cameAt}
+ catch(e){$('st').textContent='Not saved to sheet (kept on screen only): '+e.message}}
+async function clearCame(slotId){fu=fu.filter(a=>a.slotId!==slotId);paint();
+ try{await post('deleteFollowup',[date,slotId]);$('st').textContent='Removed.'}catch(e){$('st').textContent='Could not remove on sheet: '+e.message}}
+function came(s){const r=duty.find(x=>x.slotId===s);if(!r)return;if(bySlot(s))return clearCame(s);
+ if(!r.empId)return openDlg(s);setCame(s,{id:r.empId,name:r.empName,phone:r.phone})}
+
+/* other-driver dialog */
+function openDlg(s){const r=duty.find(x=>x.slotId===s);slot=s;
+ $('dT').textContent='Who operated '+(r.servNo||'this service')+'?';
+ $('dS').textContent='Assigned: '+(r.empName?r.empName+' (ID '+r.empId+')':'nobody')+' · Rep '+td(r.repTime);
+ $('eId').value='';$('eN').value='';$('dH').textContent='';$('eT').value=nowHM();$('dlg').showModal();$('eId').focus()}
+$('eId').addEventListener('input',()=>{const p=who($('eId').value),id=$('eId').value.trim(),d=duty.find(r=>r.empId===id);
+ if(p){$('eN').value=p.name;$('dH').textContent=d?'On chart: '+d.servNo+' → will be shown as Supporting driver':'Not on today’s chart → will be shown as Called by supervisor'}
+ else $('dH').textContent=id?'Unknown ID — enter the name (shown as Called by supervisor).':''});
+$('dX').onclick=()=>$('dlg').close();
+$('dOk').onclick=()=>{const id=$('eId').value.trim();if(!id){$('dH').textContent='Enter the driver Emp ID.';return}
+ const p=who(id)||{id,name:'',phone:''};setCame(slot,{id:p.id,name:$('eN').value.trim()||p.name,phone:p.phone},$('eT').value||nowHM());$('dlg').close()};
+
+document.addEventListener('click',e=>{const b=e.target.closest('button[data-a]');if(!b)return;
+ const a=b.dataset.a;if(a==='cl'){const k=b.dataset.k;called.has(k)?called.delete(k):called.add(k);
+  try{localStorage.setItem('fb_called',JSON.stringify([...called]))}catch(x){}paint()}
+ else if(a==='came')came(b.dataset.s);else if(a==='sw')openDlg(b.dataset.s)});
+
+async function load(){
+ $('st').textContent='Loading duty chart for '+date+'…';
+ try{
+  const [d,dr]=await Promise.all([get('getDuty',date),get('getAllDrivers').catch(()=>({drivers:[]}))]);
+  duty=(d.rows||[]).filter(r=>r.servNo||r.empId);roster=dr.drivers||[];
+  $('dl').innerHTML=duty.map(r=>r.empId).concat(roster.map(x=>x.id)).filter((v,i,a)=>v&&a.indexOf(v)===i).map(v=>{const p=who(v);return`<option value="${esc(v)}">${esc(p?p.name:'')}</option>`}).join('');
+  $('st').textContent=duty.length?'Loaded '+duty.length+' duties for '+date:'No duty chart saved for '+date;
+  try{const f=await get('getFollowup',date);fu=f.rows||[]}catch(e){fu=[];$('st').textContent+=' · Follow-up sheet not available: add the follow-up code to Code.gs and redeploy ('+e.message+')'}
+ }catch(e){duty=[];fu=[];$('st').textContent='Could not load: '+e.message}
+ paint()}
+
+$('date').value=date;$('date').onchange=()=>{date=$('date').value||iso(new Date());load()};
+$('ref').onclick=load;$('q').oninput=paint;
+$('tD').onclick=()=>setV('D');$('tS').onclick=()=>setV('S');
+function setV(v){view=v;$('tD').classList.toggle('on',v==='D');$('tS').classList.toggle('on',v==='S');$('duties').style.display=v==='D'?'':'none';$('sum').style.display=v==='S'?'block':'none';paint()}
+load();setInterval(paint,30000);
+</script></body></html>
